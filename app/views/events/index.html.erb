@@ -1,0 +1,150 @@
+<div class="col-md-9"><center>
+		<div class="jumbotron">
+		<% if @even_last.present?%>
+		  <h1><%= @even_last.title%></h1>
+		  <p><%= @even_last.discription%></p>
+		  <p><%=link_to"Publish"%></p>
+		  <% else%>
+		  <p>No events available ! &nbsp;
+		  <%=link_to"Create New Event",new_event_path,class:"btn btn-default btn-lg "%></p>
+		  <% end%>
+		</div></center>
+
+ <%if myevent=current_user.events%>	
+ <% a=0%>
+ <div class="col-md-3">
+ <% myevent.each do |event|%>	
+   <% if a%2==0%>
+	<div class="panel panel-primary">
+	
+	  <div class="panel-heading">
+	   
+	    <h3 class="panel-title"><%= event.title%></h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= event.discription%>
+	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	  </div>
+	</div>
+   <% end%>
+   <% a=a+1%>
+   <% end %>
+   </div>
+  <% end %>
+
+
+
+  <%if myevent=current_user.events%>	
+ <% a=0%>
+ <div class="col-md-3">
+ <% myevent.each do |event|%>	
+   <% unless a%2==0%>
+	<div class="panel panel-primary">
+	
+	  <div class="panel-heading">
+	   
+	    <h3 class="panel-title"><%= event.title%></h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= event.discription%>
+	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	  </div>
+	</div>
+   <% end%>
+   <% a=a+1%>
+   <% end %>
+   </div>
+  <% end %>
+  
+  <% if friend_list1.present?%>
+   <div class="col-md-3">
+   <% friend_list1.each do |frnd|%>
+
+   <% friend=User.find(frnd.friend_id)%>
+    <% if friend.events.present?%>
+     <% friend.events.each do |event|%>
+	<div class="panel panel-primary">
+	
+	  <div class="panel-heading">
+	   
+	    <h3 class="panel-title"><%= event.title%></h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= event.discription%>
+	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	  </div>
+	</div>
+	<% end %>
+	<% end%>
+	<% end%>
+	</div>
+  <%end %>
+
+  <% if friend_list2.present?%>
+   <div class="col-md-3">
+   <% friend_list2.each do |frnd|%>
+
+   <% friend=User.find(frnd.user_id)%>
+    <% if friend.events.present?%>
+     <% friend.events.each do |event|%>
+	<div class="panel panel-primary">
+	
+	  <div class="panel-heading">
+	   
+	    <h3 class="panel-title"><%= event.title%></h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= event.discription%>
+	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	  </div>
+	</div>
+	<% end %>
+	<% end%>
+	<% end%>
+	</div>
+  <%end %>
+	
+</div>
+
+<div class="col-md-3">
+
+<ul class="list-group">
+
+<% @users.each do |user|%>
+  <li class="list-group-item">
+    <%= user.name%> 
+    <%if is_friend?(user.id)%>
+    <%=link_to"add friend",guest_friend_request_path(user.id),class:"navbar-right btn btn-info"%>
+    <%end%>
+  </li>
+  <% end %>
+  <div class="apple_pagination" style="height:10%;">
+  <%= will_paginate @users %>
+  </div>
+</ul>
+<!--  ###############   Friend List  ################-->
+<% if friend_list1.present?%>
+<ul class="list-group">
+    <% friend_list1.each do |friend|%>
+    <%user=User.find(friend.friend_id)%>
+     <li class="list-group-item"> <%= user.name%>
+     	<span class="badge"><%=user.events.count %></span>
+
+     </li>
+    <% end %>
+</ul>
+<% end%>
+
+<% if friend_list2.present?%>
+<ul class="list-group">
+    <% friend_list2.each do |friend|%>
+     <%user=User.find(friend.user_id)%>
+     <li class="list-group-item"> <%= user.name%>
+     	<span class="badge"><%=user.events.count %></span>
+
+     </li>
+    <% end %>
+</ul>
+<% end%>
+</div>
+
