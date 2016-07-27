@@ -120,24 +120,42 @@
   <div class="alert alert-info" id="recent_event">
  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <%= notice%></div>
-<%= yield %>
+ <%= yield %>
 
 <script type="text/javascript">
   $(function() {
     $('#datetimepicker').datetimepicker({
       language: 'en',
       pick12HourFormat: true,
-      pickTime: true
+      pickTime: true,
+      format:'yyyy-MM-dd HH:mm:ss'
     });
   });
 
-  $(function() {
-    $('#datetimepicker1').datetimepicker({
-      language: 'en',
-      pick12HourFormat: true,
-      pickTime: true
+
+    $(function() {
+      $('#datetimepicker1').datetimepicker({
+        language: 'en',
+        format:'yyyy-MM-dd'
+      });
     });
-  });
+
+  /*$("#datetimepicker1").datepicker({
+    beforeShow: function (input, inst) {
+        setTimeout(function () {
+            inst.dpDiv.css({
+                top: 400,
+                left: 200
+            });
+        }, 0);
+    }
+});*/
+// $('#datetimepicker1').datepicker({
+//     beforeShow: function(input, inst)
+//     {
+//         inst.dpDiv.css({marginTop: -input.offsetHeight + 'px', marginLeft: input.offsetWidth + 'px'});
+//     }
+// });
 </script>
 </body>
 </html>

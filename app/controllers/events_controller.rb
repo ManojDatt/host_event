@@ -15,6 +15,7 @@ class EventsController < ApplicationController
 
         redirect_to root_path , notice:"Event published !"
   end
+  
   def new
   	@event=Event.new
   end

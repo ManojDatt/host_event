@@ -8,3 +8,4 @@ class CommentRelayJob < ApplicationJob
   end
 
 end
+

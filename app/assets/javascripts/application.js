@@ -16,3 +16,9 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require bootstrap-datetimepicker
+
+$(document).ready(function(){
+    $("#datetimepiker1").click(function(){
+        $(".bootstrap-datetimepicker-widget").toggle();
+    });
+});
