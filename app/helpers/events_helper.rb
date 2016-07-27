@@ -8,7 +8,7 @@ module EventsHelper
 	end
 
 	def friend_request_list
-		current_user.inverse_friendships.where(status:"pendding")
+		current_user.inverse_friendships.where(status:"pending")
 	end
 
 	def friend_list1
@@ -21,5 +21,17 @@ module EventsHelper
 
 	def event_count
 		friend_list1.count + friend_list2.count
+	end
+  ################ notification for specific events  #####################
+	def join_notification evnt_id
+		event=Event.find(evnt_id)
+		event.join_events.where(host_id:current_user.id,status:"pending")
+	end
+	def all_event
+		current_user.events
+	end
+
+	def is_guest?(e_id)
+	  current_user.join_events.where(event_id:e_id,status:"accept").present?	
 	end
 end

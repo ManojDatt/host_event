@@ -1,0 +1,9 @@
+<%=form_for :comment, url:comments_create_path do |f|%>
+<%=hidden_field_tag "event_id",@event.id%>
+
+<div class="col-md-7" style="margin-left:20%;">
+<%=f.text_area :content, class:"form-control", autofocus: true%>
+</div>
+<br>
+<%=f.submit"Comment", class:"btn btn-primary"%>
+<% end %>

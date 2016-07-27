@@ -3,7 +3,7 @@
 		<% if @even_last.present?%>
 		  <h1><%= @even_last.title%></h1>
 		  <p><%= @even_last.discription%></p>
-		  <p><%=link_to"Publish"%></p>
+		  <p><%=link_to"Publish",publish_event_path%></p>
 		  <% else%>
 		  <p>No events available ! &nbsp;
 		  <%=link_to"Create New Event",new_event_path,class:"btn btn-default btn-lg "%></p>
@@ -19,11 +19,18 @@
 	
 	  <div class="panel-heading">
 	   
-	    <h3 class="panel-title"><%= event.title%></h3>
+	    <h3 class="panel-title"><%= event.title%>
+	    	
+	    </h3>
 	  </div>
 	  <div class="panel-body">
-	    <%= event.discription%>
+	    <%= event.discription%><%=link_to"Read more..",event_path(event)%>
 	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+       <ul class="nav nav-pills">
+        <li><%=button_to"delete",destroy_event_path(event) ,class:"btn btn-primary btn-sm"%></li>
+        
+        <li><%=button_to"update",update_event_path(event),class:"btn btn-primary btn-sm"%></li>
+        </ul>
 	  </div>
 	</div>
    <% end%>
@@ -46,8 +53,13 @@
 	    <h3 class="panel-title"><%= event.title%></h3>
 	  </div>
 	  <div class="panel-body">
-	    <%= event.discription%>
+	    <%= event.discription%><%=link_to"Read more..",event_path(event)%>
 	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	    <ul class="nav nav-pills">
+        <li><%=button_to"delete",destroy_event_path(event),class:"btn btn-primary btn-sm"%></li>
+       
+        <li><%=button_to"update",update_event_path(event),class:"btn btn-primary btn-sm"%></li>
+        </ul>
 	  </div>
 	</div>
    <% end%>
@@ -55,7 +67,8 @@
    <% end %>
    </div>
   <% end %>
-  
+  <!--================================  Others' Events ===========================-->
+
   <% if friend_list1.present?%>
    <div class="col-md-3">
    <% friend_list1.each do |frnd|%>
@@ -68,10 +81,30 @@
 	  <div class="panel-heading">
 	   
 	    <h3 class="panel-title"><%= event.title%></h3>
+	    <span class="badge"><%=link_to "Publish by #{User.find(event.user_id).name}"%></span>
+	   
 	  </div>
 	  <div class="panel-body">
-	    <%= event.discription%>
+	    <%= event.discription%> <%=link_to"Read more..",event_path(event)%>
 	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	    
+       <% if event.join_events.where(user_id:current_user.id,host_id:event.user_id,status:"pending").present?%>
+      
+       <div class="btn btn-default btn-lg btn-block"%>Join under process.. !</div>
+       <%# end %>
+       <% elsif event.join_events.where(user_id:current_user.id,host_id:event.user_id,status:"accept").present?%>
+	    
+	   <div class="btn btn-default btn-lg btn-block"%>You Joined.. !</div>
+       <%# end %>
+       <% else %> <%#event.join_events.where(user_id:current_user.id,host_id:frnd.friend_id).present?%>
+	  
+	   <%=form_tag request_join_event_url(event.user_id) do %>
+
+        <%= hidden_field_tag "event_id",event.id%>
+        <%=submit_tag "Join Event !", class:"btn btn-default btn-lg btn-block"%>
+
+ 	   <%end%>
+ 	   <% end %>
 	  </div>
 	</div>
 	<% end %>
@@ -92,10 +125,28 @@
 	  <div class="panel-heading">
 	   
 	    <h3 class="panel-title"><%= event.title%></h3>
+	    <span class="badge"><%=link_to "Publish by #{User.find(event.user_id).name}"%></span>
 	  </div>
 	  <div class="panel-body">
-	    <%= event.discription%>
+	    <%= event.discription%><%=link_to"Read more..",event_path(event)%>
 	    <span class="badge"><%= event.date.to_formatted_s(:rfc822) if event.date%></span>
+	    
+	    <%#= render 'form', locals:{ :event => event} %>
+	    
+	    <% if event.join_events.where(user_id:current_user.id,host_id:event.user_id,status:"pending").present?%>
+       
+       <div class="btn btn-default btn-lg btn-block"%>Join under process !</div>
+       
+       <% elsif event.join_events.where(user_id:current_user.id,host_id:event.user_id,status:"accept").present?%>
+	    <div class="btn btn-default btn-lg btn-block"%>You Joined !</div>
+       <% else %><%# event.join_events.where(user_id:current_user.id,host_id:frnd.friend_id).present?%>
+	   <%=form_tag request_join_event_url(event.user_id) do %>
+
+        <%= hidden_field_tag "event_id",event.id%>
+        <%=submit_tag "Join Event !", class:"btn btn-default btn-lg btn-block"%>
+
+ 	   <%end%>
+ 	   <% end %>
 	  </div>
 	</div>
 	<% end %>
@@ -105,7 +156,7 @@
   <%end %>
 	
 </div>
-
+<!-- ====================   Friends List + User List ======================= -->
 <div class="col-md-3">
 
 <ul class="list-group">
@@ -119,7 +170,7 @@
   </li>
   <% end %>
   <div class="apple_pagination" style="height:10%;">
-  <%= will_paginate @users %>
+  <%= paginate @users %>
   </div>
 </ul>
 <!--  ###############   Friend List  ################-->

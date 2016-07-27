@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :user 
-  self.per_page = 2
+  has_many :join_events , dependent: :destroy
+  has_many :comments , dependent: :destroy
+  has_many :likes
+ 
 end

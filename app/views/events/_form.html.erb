@@ -1,0 +1,6 @@
+
+ <%=form_tag request_join_event_url(event.user_id) do %>
+
+     <%= hidden_field_tag "event_id",event.id%>
+     <%=submit_tag "Join Event !", class:"btn btn-default btn-lg btn-block"%>
+ <%end%>

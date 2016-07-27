@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'bootstrap-datetimepicker-rails'
 
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'will_paginate', '>= 3.1'
+gem 'kaminari'
 
 gem 'activeadmin', github: 'activeadmin'
 gem "devise"
