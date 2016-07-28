@@ -32,6 +32,10 @@ Rails.application.routes.draw do
   post 'reject_event_join_request/:event_id' => 'events#reject_event_join_request' ,as:'reject_event_join_request'
  
 
+ 
+    post '/get_events' =>'events#get_events'  
+    post '/get_guests' => 'events#get_guests' 
+
   # Serve websocket cable requests in-process
    mount ActionCable.server => '/cable'
 end

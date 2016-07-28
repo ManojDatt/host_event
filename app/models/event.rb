@@ -4,4 +4,8 @@ class Event < ApplicationRecord
   has_many :comments , dependent: :destroy
   has_many :likes
  
+
+ # def guests
+ # 	User.where.not(id: self.join_events.pluck(:user_id))
+ # end
 end

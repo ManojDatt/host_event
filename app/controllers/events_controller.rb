@@ -73,6 +73,25 @@ class EventsController < ApplicationController
    redirect_to root_path, notice:"Event join request rejected !"
   end
   
+#############################    ACTIVE ADMIN ############
+  def get_events
+   p"-------------111------================---------------------#{params.inspect}==========="
+    @host = User.find(params[:host_id])
+    events = @host.events.pluck(:title,:id)
+
+    render :json => {:events => events}
+  end
+
+  def get_guests
+     p"-----------222--------================---------------------#{params.inspect}==========="
+     @event = Event.find(params[:event_id])
+     s1=@event.join_events.all.pluck(:user_id)   #######  joined guest_id
+     s2=Event.where(id:params[:event_id]).pluck(:user_id)     ##  host_id
+     guests= User.where("id!=? or id!=?",s1,s2).pluck(:name,:id)
+    render :json => {:guests => guests}
+
+  end
+#####################################################  END 
   private
   def self_find
   	@event = Event.find(params[:id])
@@ -80,4 +99,6 @@ class EventsController < ApplicationController
   def params_list
   	 params.require(:event).permit(:title,:discription,:date)
   end
+
+  
 end

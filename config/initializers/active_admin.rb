@@ -5,7 +5,7 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Host Event Guest"
-
+  config.register_javascript 'custome.js'
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
