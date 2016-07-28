@@ -164,8 +164,15 @@
 <% @users.each do |user|%>
   <li class="list-group-item">
     <%= user.name%> 
+   <!--==============      to show user online   ===========-->
+     <%if user.online?%>
+           <span class="badge glyphicon glyphicon-ok-sign">online</span>
+           <% else%>
+           <span class="badge glyphicon glyphicon-remove-sign">offline</span>
+    <%end%>
+    <!--      =============  end   =============   -->
     <%if is_friend?(user.id)%>
-    <%=link_to"add friend",guest_friend_request_path(user.id),class:"navbar-right btn btn-info"%>
+    <%=link_to" ",guest_friend_request_path(user.id),class:"glyphicon glyphicon-plus-sign"%>
     <%end%>
   </li>
   <% end %>
@@ -179,6 +186,15 @@
     <% friend_list1.each do |friend|%>
     <%user=User.find(friend.friend_id)%>
      <li class="list-group-item"> <%= user.name%>
+
+
+     <!--==============      to show user online   ===========-->
+     <%if user.online?%>
+           <span class="badge glyphicon glyphicon-ok-sign bg-success">online</span>
+           <% else%>
+           <span class="badge glyphicon glyphicon-remove-sign bg-danger">offline</span>
+    <%end%>
+    <!--      =============  end   =============   -->
      	<span class="badge"><%=user.events.count %></span>
 
      </li>
@@ -191,6 +207,13 @@
     <% friend_list2.each do |friend|%>
      <%user=User.find(friend.user_id)%>
      <li class="list-group-item"> <%= user.name%>
+     <!--==============      to show user online   ===========-->
+     <%if user.online?%>
+           <span class="badge glyphicon glyphicon-ok-sign bg-success">online</span>
+           <% else%>
+           <span class="badge glyphicon glyphicon-remove-sign bg-danger">offline</span>
+    <%end%>
+    <!--      =============  end   =============   -->
      	<span class="badge"><%=user.events.count %></span>
 
      </li>

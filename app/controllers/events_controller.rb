@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   	@users = User.all.where("id !=?",current_user.id).page(params[:page]).per(5)
   	@even_last=current_user.events.last
     @events=current_user.events.where("id != ?",@even_last.id).order('DESC') if @even_last
+    
   end
    #######################   PUBLISH EVENT CREATED #######################
   def publish_event

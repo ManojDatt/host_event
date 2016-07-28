@@ -20,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-       <%= link_to "My@~Events", root_path, class: "navbar-brand" %>
+       <%= link_to "My@~Events ", root_path, class: "navbar-brand" %>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -33,7 +33,17 @@
         <%= link_to "Log in", new_user_session_path %><br />
         </li>
         <% else %>
-         <li><a href="#"class="navbar-brand" > Signed ~ <%= current_user.name%></a></li>
+         <li><a href="#"class="navbar-brand" > HOST:<%= current_user.name%></a>
+         <!--  ======    TO ShOW USER IS ONLINE   OR  NOT -->
+         
+
+         <%if current_user.online?%>
+           <span class="badge glyphicon glyphicon-ok-sign bg-success">online</span>
+           <% else%>
+           <span class="badge glyphicon glyphicon-remove-sign bg-danger">offline</span>
+         <%end%>
+         
+         </li>
 
          <li><%=link_to"Create New Event",new_event_path%></li>
 

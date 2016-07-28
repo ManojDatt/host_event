@@ -4,12 +4,25 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  after_action :set_online
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:dob,:address])
   end
 
+
+  private
+
+  # set to online
+  def set_online
+    if !!current_user
+      # using separate Redis database
+      # such as $redis_onlines = Redis.new db: 15
+      # value not need, only key
+      $redis_onlines.set( current_user.id, nil, ex: 10*60 )
+      # 'ex: 10*60' - set time to live - 10 minutes
+    end
+  end
 
 end
