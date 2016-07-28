@@ -85,9 +85,12 @@ class EventsController < ApplicationController
   def get_guests
      p"-----------222--------================---------------------#{params.inspect}==========="
      @event = Event.find(params[:event_id])
+     ids = Array.new
      s1=@event.join_events.all.pluck(:user_id)   #######  joined guest_id
      s2=Event.where(id:params[:event_id]).pluck(:user_id)     ##  host_id
-     guests= User.where("id!=? or id!=?",s1,s2).pluck(:name,:id)
+     ids = s1+s2
+   
+     guests= User.where("id NOT IN (?)", ids).pluck(:name,:id)
     render :json => {:guests => guests}
 
   end
