@@ -13,7 +13,7 @@ App.comment = App.cable.subscriptions.create("CommentChannel", {
   },
   received: function(data) {
  
-      return this.collection().append("<th style='word-break:break-all;'>"+data.content+"<span class='badge'>"+data['time']+" ago , by "+data['user']+"</span></th>");
+      return this.collection().append("<tr style='word-break:break-all;'> <td></td><td>"+data.content+"<span class='badge'>"+data['time']+" ago , by "+data['user']+"</span></td</tr>");
       	
     
   },

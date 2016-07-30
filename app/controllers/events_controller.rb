@@ -35,7 +35,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    
+      @users = User.all.where("id !=?",current_user.id).page(params[:page]).per(5)
   end
   def edit
     
