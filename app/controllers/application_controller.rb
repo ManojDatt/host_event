@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:dob,:address])
   end
 
+  def set_online
+            if !!current_user
+                   $redis_onlines.set( current_user.id, nil, ex: 60 )
+                  # 'ex: 10*60' - set time to live - 10 minutes
+            end
+  end
+
 
   private
 

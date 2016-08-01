@@ -159,66 +159,8 @@
 <!-- ====================   Friends List + User List ======================= -->
 <div class="col-md-3">
 
-<ul class="list-group">
 
-<% @users.each do |user|%>
-  <li class="list-group-item">
-    <%= user.name%> 
-   <!--==============      to show user online   ===========-->
-     <%if user.online?%>
-           <span class="badge glyphicon glyphicon-ok-sign">online</span>
-           <% else%>
-           <span class="badge glyphicon glyphicon-remove-sign">offline</span>
-    <%end%>
-    <!--      =============  end   =============   -->
-    <%if is_friend?(user.id)%>
-    <%=link_to" ",guest_friend_request_path(user.id),class:"glyphicon glyphicon-plus-sign"%>
-    <%end%>
-  </li>
-  <% end %>
-  <div class="apple_pagination" style="height:10%;">
-  <%= paginate @users %>
-  </div>
-</ul>
-<!--  ###############   Friend List  ################-->
-<% if friend_list1.present?%>
-<ul class="list-group">
-    <% friend_list1.each do |friend|%>
-    <%user=User.find(friend.friend_id)%>
-     <li class="list-group-item"> <%= user.name%>
+<%= render "friends", @user%>
 
-
-     <!--==============      to show user online   ===========-->
-     <%if user.online?%>
-           <span class="badge glyphicon glyphicon-ok-sign bg-success">online</span>
-           <% else%>
-           <span class="badge glyphicon glyphicon-remove-sign bg-danger">offline</span>
-    <%end%>
-    <!--      =============  end   =============   -->
-     	<span class="badge"><%=user.events.count %></span>
-
-     </li>
-    <% end %>
-</ul>
-<% end%>
-
-<% if friend_list2.present?%>
-<ul class="list-group">
-    <% friend_list2.each do |friend|%>
-     <%user=User.find(friend.user_id)%>
-     <li class="list-group-item"> <%= user.name%>
-     <!--==============      to show user online   ===========-->
-     <%if user.online?%>
-           <span class="badge glyphicon glyphicon-ok-sign bg-success">online</span>
-           <% else%>
-           <span class="badge glyphicon glyphicon-remove-sign bg-danger">offline</span>
-    <%end%>
-    <!--      =============  end   =============   -->
-     	<span class="badge"><%=user.events.count %></span>
-
-     </li>
-    <% end %>
-</ul>
-<% end%>
 </div>
 

@@ -36,7 +36,12 @@ class EventsController < ApplicationController
   end
 
   def show
-    
+     guest=current_user.join_events.where(event_id:params[:id],status:"accept").present?
+      if guest or JoinEvent.where(host_id:params[:id]).exists?
+      @users = User.all.where("id !=?",current_user.id).page(params[:page]).per(5)
+       else
+      redirect_to root_path, notice:"You have not joined for this event !"
+      end
   end
   def edit
     
